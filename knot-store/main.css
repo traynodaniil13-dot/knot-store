@@ -1,0 +1,328 @@
+/* ============================================================
+   KNØT — Main Stylesheet
+   Base variables & reset
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   Google Fonts import
+   ------------------------------------------------------------ */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+
+
+/* ------------------------------------------------------------
+   Design Tokens
+   ------------------------------------------------------------ */
+:root {
+
+  /* --- Color palette --- */
+  --color-black:       #0a0a0a;
+  --color-white:       #f8f8f6;
+  --color-gray:        #888888;
+  --color-gray-light:  #d4d4d0;
+  --color-gray-dark:   #3a3a38;
+  --color-accent:      #1a3a4a;   /* azul mar oscuro */
+  --color-accent-muted:#2a5068;   /* acento con más luz para hovers */
+
+  /* Alias semánticos */
+  --color-bg:          var(--color-white);
+  --color-surface:     #f2f2f0;   /* tarjetas, secciones diferenciadas */
+  --color-text:        var(--color-black);
+  --color-text-muted:  var(--color-gray);
+  --color-border:      #e2e2de;
+  --color-cta:         var(--color-accent);
+  --color-cta-hover:   var(--color-accent-muted);
+
+  /* Color de donación / causa marina */
+  --color-ocean:       #0d2b38;
+  --color-ocean-light: #c8dde6;
+
+
+  /* --- Tipografía --- */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Escala tipográfica */
+  --text-xs:   0.75rem;    /*  12px */
+  --text-sm:   0.875rem;   /*  14px */
+  --text-base: 1rem;       /*  16px */
+  --text-md:   1.125rem;   /*  18px */
+  --text-lg:   1.25rem;    /*  20px */
+  --text-xl:   1.5rem;     /*  24px */
+  --text-2xl:  2rem;       /*  32px */
+  --text-3xl:  2.5rem;     /*  40px */
+  --text-4xl:  3.5rem;     /*  56px */
+  --text-5xl:  5rem;       /*  80px */
+
+  /* Pesos */
+  --weight-light:   300;
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-semibold:600;
+  --weight-bold:    700;
+
+  /* Interlineado */
+  --leading-tight:  1.1;
+  --leading-snug:   1.3;
+  --leading-normal: 1.6;
+  --leading-loose:  1.8;
+
+  /* Espaciado entre letras */
+  --tracking-tight: -0.03em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.05em;
+  --tracking-wider:  0.12em;
+  --tracking-widest: 0.2em;
+
+
+  /* --- Escala de espaciado (base 4px) --- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --space-40: 160px;
+  --space-48: 192px;
+
+
+  /* --- Layout --- */
+  --max-width:        1280px;
+  --max-width-narrow: 720px;
+  --max-width-text:   640px;
+
+  --container-px:     var(--space-8);   /* padding lateral en móvil  */
+  --container-px-md:  var(--space-12);  /* padding lateral en tablet */
+  --container-px-lg:  var(--space-16);  /* padding lateral en desktop*/
+
+  --header-height: 72px;
+
+
+  /* --- Radio de borde --- */
+  --radius-sm:   2px;
+  --radius-md:   4px;
+  --radius-lg:   8px;
+  --radius-full: 9999px;
+
+
+  /* --- Sombras --- */
+  --shadow-xs: 0 1px 2px rgba(10, 10, 10, 0.06);
+  --shadow-sm: 0 2px 8px rgba(10, 10, 10, 0.08);
+  --shadow-md: 0 4px 20px rgba(10, 10, 10, 0.10);
+  --shadow-lg: 0 8px 40px rgba(10, 10, 10, 0.12);
+  --shadow-xl: 0 20px 60px rgba(10, 10, 10, 0.16);
+
+  /* Sombra de acento marino (para CTAs, badges de causa) */
+  --shadow-accent: 0 4px 24px rgba(26, 58, 74, 0.25);
+
+
+  /* --- Transiciones y animaciones --- */
+  --duration-instant: 80ms;
+  --duration-fast:    150ms;
+  --duration-base:    250ms;
+  --duration-slow:    400ms;
+  --duration-slower:  600ms;
+  --duration-crawl:   900ms;
+
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);   /* Material standard */
+  --ease-in:      cubic-bezier(0.4, 0, 1, 1);
+  --ease-out:     cubic-bezier(0, 0, 0.2, 1);
+  --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1); /* ligero rebote */
+  --ease-smooth:  cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* Atajos de transición listos para usar */
+  --transition-hover:    color var(--duration-fast) var(--ease-out),
+                         background-color var(--duration-fast) var(--ease-out),
+                         border-color var(--duration-fast) var(--ease-out),
+                         opacity var(--duration-fast) var(--ease-out);
+
+  --transition-transform: transform var(--duration-base) var(--ease-spring);
+
+  --transition-all:       all var(--duration-base) var(--ease-default);
+
+  --transition-image:     transform var(--duration-slow) var(--ease-smooth),
+                          filter var(--duration-slow) var(--ease-smooth);
+
+  --transition-fade:      opacity var(--duration-base) var(--ease-out);
+
+
+  /* --- Z-index --- */
+  --z-below:   -1;
+  --z-base:     0;
+  --z-raised:   10;
+  --z-dropdown: 100;
+  --z-sticky:   200;
+  --z-overlay:  300;
+  --z-modal:    400;
+  --z-toast:    500;
+
+
+  /* --- Opacidades --- */
+  --opacity-disabled: 0.4;
+  --opacity-muted:    0.6;
+  --opacity-subtle:   0.8;
+}
+
+
+/* ------------------------------------------------------------
+   CSS Reset
+   ------------------------------------------------------------ */
+
+/* Box-sizing global */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Root & HTML */
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  hanging-punctuation: first last;
+}
+
+/* Body base */
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-normal);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  min-height: 100dvh;
+}
+
+/* Tipografía heredada */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* Imágenes y media responsivos */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Eliminar estilos de lista por defecto */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Headings sin margen */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+/* Párrafos */
+p {
+  text-wrap: pretty;
+  max-width: 70ch;
+}
+
+/* Botones */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tablas */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Fieldset y legend */
+fieldset {
+  border: none;
+}
+
+/* Oculto accesible */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Focus visible (accesibilidad) */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Selección de texto */
+::selection {
+  background-color: var(--color-ocean-light);
+  color: var(--color-ocean);
+}
+
+/* Scrollbar (Webkit) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gray-light);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gray);
+}
+
+/* Reducción de movimiento */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

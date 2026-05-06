@@ -1,0 +1,619 @@
+/* ============================================================
+   KNØT — Components
+   Buttons · Badges · Inputs · Typography utilities
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   Typography utilities
+   ------------------------------------------------------------ */
+
+.t-display {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+}
+
+.t-display-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+}
+
+.t-label {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+}
+
+.t-caption {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: var(--leading-normal);
+}
+
+.t-price {
+  font-family: var(--font-display);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-normal);
+  font-variant-numeric: tabular-nums;
+}
+
+.t-muted  { color: var(--color-text-muted); }
+.t-accent { color: var(--color-accent); }
+.t-center { text-align: center; }
+.t-upper  { text-transform: uppercase; letter-spacing: var(--tracking-wider); }
+
+
+/* ------------------------------------------------------------
+   Divider
+   ------------------------------------------------------------ */
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-border);
+  border: none;
+  margin-block: var(--space-8);
+}
+
+.divider--tight { margin-block: var(--space-4); }
+.divider--loose { margin-block: var(--space-12); }
+
+
+/* ------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: var(--space-4) var(--space-8);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-hover), var(--transition-transform);
+  white-space: nowrap;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.btn:hover::after  { opacity: 0.06; }
+.btn:active::after { opacity: 0.12; }
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: var(--opacity-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Primary — fondo negro */
+.btn--primary {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border-color: var(--color-black);
+}
+
+.btn--primary:hover {
+  background-color: var(--color-gray-dark);
+  border-color: var(--color-gray-dark);
+}
+
+/* Secondary — outline negro */
+.btn--secondary {
+  background-color: transparent;
+  color: var(--color-black);
+  border-color: var(--color-black);
+}
+
+.btn--secondary:hover {
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+/* Ocean — acento marino (CTA de causa/donación) */
+.btn--ocean {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-accent);
+}
+
+.btn--ocean:hover {
+  background-color: var(--color-accent-muted);
+  border-color: var(--color-accent-muted);
+}
+
+/* Ghost — sin borde ni fondo */
+.btn--ghost {
+  background-color: transparent;
+  color: var(--color-text-muted);
+  border-color: transparent;
+  padding-inline: var(--space-2);
+}
+
+.btn--ghost:hover {
+  color: var(--color-black);
+}
+
+/* Sizes */
+.btn--sm {
+  font-size: var(--text-xs);
+  padding: var(--space-2) var(--space-6);
+  letter-spacing: var(--tracking-widest);
+}
+
+.btn--lg {
+  font-size: var(--text-base);
+  padding: var(--space-6) var(--space-12);
+}
+
+.btn--full { width: 100%; }
+
+/* Icon button */
+.btn--icon {
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  aspect-ratio: 1;
+}
+
+
+/* ------------------------------------------------------------
+   Badges
+   ------------------------------------------------------------ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+/* New — negro */
+.badge--new {
+  background-color: var(--color-black);
+  color: var(--color-white);
+}
+
+/* Ocean — causa marina */
+.badge--ocean {
+  background-color: var(--color-ocean-light);
+  color: var(--color-ocean);
+}
+
+/* Outline */
+.badge--outline {
+  background-color: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+/* Sale */
+.badge--sale {
+  background-color: #f5ede8;
+  color: #8b3a1a;
+}
+
+/* Dot indicator */
+.badge::before {
+  content: '';
+  display: none;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.badge--dot::before { display: block; }
+
+
+/* ------------------------------------------------------------
+   Inputs & Form elements
+   ------------------------------------------------------------ */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.field__label {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.field__hint {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-top: calc(var(--space-1) * -1);
+}
+
+.field__error {
+  font-size: var(--text-sm);
+  color: #c0392b;
+}
+
+/* Base input */
+.input {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-regular);
+  color: var(--color-text);
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+  width: 100%;
+  outline: none;
+  transition: border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.input::placeholder {
+  color: var(--color-gray-light);
+}
+
+.input:hover {
+  border-color: var(--color-gray);
+}
+
+.input:focus {
+  border-color: var(--color-black);
+  box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.08);
+}
+
+.input--error {
+  border-color: #c0392b;
+}
+
+.input--error:focus {
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.1);
+}
+
+/* Select */
+.select {
+  composes: input;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-4) center;
+  padding-right: var(--space-8);
+  cursor: pointer;
+}
+
+/* Size selector (variantes del polo) */
+.size-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.size-option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-hover);
+  user-select: none;
+}
+
+.size-option:hover {
+  border-color: var(--color-black);
+}
+
+.size-option.is-selected {
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border-color: var(--color-black);
+}
+
+.size-option.is-unavailable {
+  color: var(--color-gray-light);
+  border-color: var(--color-border);
+  cursor: not-allowed;
+  position: relative;
+  overflow: hidden;
+}
+
+.size-option.is-unavailable::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: var(--color-gray-light);
+  transform: rotate(-30deg);
+}
+
+/* Color selector */
+.color-selector {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.color-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: outline-color var(--duration-fast) var(--ease-out);
+  position: relative;
+}
+
+.color-swatch:hover,
+.color-swatch.is-selected {
+  outline-color: var(--color-black);
+}
+
+/* Quantity stepper */
+.qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.qty-stepper__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-size: var(--text-lg);
+  font-weight: var(--weight-light);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: var(--transition-hover);
+  background: none;
+  border: none;
+}
+
+.qty-stepper__btn:hover {
+  color: var(--color-black);
+  background-color: var(--color-surface);
+}
+
+.qty-stepper__value {
+  min-width: 44px;
+  text-align: center;
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums;
+  border-inline: 1px solid var(--color-border);
+  padding-block: var(--space-2);
+  line-height: 1;
+}
+
+
+/* ------------------------------------------------------------
+   Card de producto
+   ------------------------------------------------------------ */
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  cursor: pointer;
+}
+
+.product-card__image-wrap {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-surface);
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-sm);
+}
+
+.product-card__image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition-image);
+}
+
+.product-card:hover .product-card__image-wrap img {
+  transform: scale(1.04);
+}
+
+.product-card__badges {
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  z-index: var(--z-raised);
+}
+
+.product-card__actions {
+  position: absolute;
+  bottom: var(--space-4);
+  right: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  z-index: var(--z-raised);
+  opacity: 0;
+  transform: translateY(var(--space-2));
+  transition: opacity var(--duration-base) var(--ease-out),
+              transform var(--duration-base) var(--ease-spring);
+}
+
+.product-card:hover .product-card__actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.product-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.product-card__name {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+  line-height: var(--leading-snug);
+}
+
+.product-card__variant {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.product-card__price-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-top: var(--space-1);
+}
+
+.product-card__price {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+}
+
+.product-card__price--original {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+  font-family: var(--font-body);
+  font-weight: var(--weight-regular);
+}
+
+
+/* ------------------------------------------------------------
+   Donation strip (CRAM)
+   ------------------------------------------------------------ */
+
+.donation-strip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-ocean-light);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  color: var(--color-ocean);
+  line-height: var(--leading-snug);
+}
+
+.donation-strip__icon {
+  font-size: var(--text-xl);
+  flex-shrink: 0;
+}
+
+.donation-strip strong {
+  font-weight: var(--weight-semibold);
+}
+
+
+/* ------------------------------------------------------------
+   Toast / Notification
+   ------------------------------------------------------------ */
+
+.toast {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-6);
+  background-color: var(--color-black);
+  color: var(--color-white);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  box-shadow: var(--shadow-lg);
+  pointer-events: all;
+}
+
+.toast--success { background-color: #1a4a2e; }
+.toast--error   { background-color: #4a1a1a; }
+.toast--ocean   { background-color: var(--color-accent); }
+
+
+/* ------------------------------------------------------------
+   Loading skeleton
+   ------------------------------------------------------------ */
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface) 25%,
+    var(--color-border)  50%,
+    var(--color-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite var(--ease-smooth);
+  border-radius: var(--radius-sm);
+}
+
+.skeleton--text   { height: 1em; border-radius: var(--radius-full); }
+.skeleton--image  { aspect-ratio: 3 / 4; }
+.skeleton--circle { aspect-ratio: 1; border-radius: 50%; }

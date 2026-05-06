@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- <title> y <meta description> se actualizan dinámicamente desde JS -->
+  <title>Cargando producto… — KNØT</title>
+  <meta name="description" content="Polos premium con propósito. 10% para la Fundación CRAM." />
+  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/components.css" />
+  <link rel="stylesheet" href="styles/layout.css" />
+</head>
+<body>
+
+  <!-- Announcement bar -->
+  <div class="announcement-bar">
+    El 10% de cada venta se dona a la <a href="index.html#causa">Fundación CRAM</a> para la protección del mar
+  </div>
+
+  <!-- Header -->
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <nav class="header-nav">
+        <a href="catalog.html" class="header-nav__link is-active">Tienda</a>
+        <a href="index.html#coleccion" class="header-nav__link">Colección</a>
+        <a href="index.html#causa" class="header-nav__link">Nuestra Causa</a>
+      </nav>
+      <a href="index.html" class="site-logo">KNØT</a>
+      <div class="header-actions">
+        <button class="btn btn--icon btn--ghost" aria-label="Buscar">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7.5" cy="7.5" r="5.5"/><path d="M13 13l3 3"/></svg>
+        </button>
+        <a href="#" class="btn btn--icon btn--ghost cart-btn" id="cart-btn" aria-label="Carrito">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1h2.5l1.8 9h9.4l1.8-6H4.5"/><circle cx="7.5" cy="15.5" r="1"/><circle cx="13.5" cy="15.5" r="1"/></svg>
+          <span class="cart-badge" id="cart-count" aria-hidden="true" hidden></span>
+        </a>
+        <button class="btn btn--icon btn--ghost mobile-menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="mobile-nav">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 4h14M2 9h14M2 14h14"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobile-nav">
+    <div class="mobile-nav__overlay" id="mobile-overlay"></div>
+    <div class="mobile-nav__panel">
+      <div class="flex justify-between items-center">
+        <a href="index.html" class="site-logo" style="font-size:var(--text-xl);">KNOT</a>
+        <button class="btn btn--icon btn--ghost" id="mobile-close" aria-label="Cerrar">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 2l14 14M16 2L2 16"/></svg>
+        </button>
+      </div>
+      <nav class="mobile-nav__links">
+        <a href="catalog.html" class="mobile-nav__link">Tienda</a>
+        <a href="index.html#coleccion" class="mobile-nav__link">Coleccion</a>
+        <a href="index.html#causa" class="mobile-nav__link">Nuestra Causa</a>
+      </nav>
+    </div>
+  </div>
+
+  <main id="main-content">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-bar">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Ruta de navegacion">
+          <a href="index.html" class="breadcrumb__link">Inicio</a>
+          <span class="breadcrumb__sep" aria-hidden="true">/</span>
+          <a href="catalog.html" class="breadcrumb__link">Tienda</a>
+          <span class="breadcrumb__sep" aria-hidden="true">/</span>
+          <span class="breadcrumb__current" id="breadcrumb-title" aria-current="page">
+            <span class="skeleton skeleton--text" style="width:120px; display:inline-block;"></span>
+          </span>
+        </nav>
+      </div>
+    </div>
+
+    <!-- STATE: loading -->
+    <section class="product-layout" id="product-loading" aria-label="Cargando producto">
+      <div class="container">
+        <div class="product-grid">
+          <div class="product-gallery">
+            <div class="gallery__main">
+              <div class="skeleton" style="width:100%; aspect-ratio:4/5; border-radius:var(--radius-md);"></div>
+            </div>
+            <div class="gallery__thumbs" style="margin-top:var(--space-3);">
+              <div class="skeleton" style="flex:1; aspect-ratio:1; border-radius:var(--radius-sm);"></div>
+              <div class="skeleton" style="flex:1; aspect-ratio:1; border-radius:var(--radius-sm);"></div>
+              <div class="skeleton" style="flex:1; aspect-ratio:1; border-radius:var(--radius-sm);"></div>
+              <div class="skeleton" style="flex:1; aspect-ratio:1; border-radius:var(--radius-sm);"></div>
+            </div>
+          </div>
+          <div class="product-info" style="gap:var(--space-6);">
+            <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+              <div class="skeleton skeleton--text" style="width:40%;"></div>
+              <div class="skeleton skeleton--text" style="width:70%; height:2em;"></div>
+            </div>
+            <div class="skeleton skeleton--text" style="width:30%; height:1.8em;"></div>
+            <div class="skeleton" style="height:52px; border-radius:var(--radius-sm);"></div>
+            <div class="skeleton" style="height:1px;"></div>
+            <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+              <div class="skeleton skeleton--text" style="width:20%;"></div>
+              <div style="display:flex;gap:var(--space-2);">
+                <div class="skeleton" style="width:44px;height:44px;border-radius:var(--radius-sm);"></div>
+                <div class="skeleton" style="width:44px;height:44px;border-radius:var(--radius-sm);"></div>
+                <div class="skeleton" style="width:44px;height:44px;border-radius:var(--radius-sm);"></div>
+                <div class="skeleton" style="width:44px;height:44px;border-radius:var(--radius-sm);"></div>
+                <div class="skeleton" style="width:44px;height:44px;border-radius:var(--radius-sm);"></div>
+              </div>
+            </div>
+            <div class="skeleton" style="height:52px; border-radius:var(--radius-sm);"></div>
+            <div class="skeleton" style="height:52px; border-radius:var(--radius-sm);"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATE: error / not found -->
+    <section class="product-layout" id="product-error" hidden aria-label="Producto no encontrado">
+      <div class="container" style="padding-block:var(--space-24); text-align:center;">
+        <p style="font-size:var(--text-4xl); margin-bottom:var(--space-6);">🌊</p>
+        <h1 style="font-family:var(--font-display); font-size:var(--text-2xl); font-weight:var(--weight-medium); margin-bottom:var(--space-4);">
+          Producto no encontrado
+        </h1>
+        <p style="color:var(--color-text-muted); margin-bottom:var(--space-8); max-width:40ch; margin-inline:auto;">
+          No hemos podido encontrar este producto. Puede que haya sido eliminado o que el enlace sea incorrecto.
+        </p>
+        <a href="catalog.html" class="btn btn--primary btn--lg">Ver todos los polos</a>
+      </div>
+    </section>
+
+    <!-- STATE: product loaded -->
+    <section class="product-layout" id="product-content" hidden aria-labelledby="product-title">
+      <div class="container">
+        <div class="product-grid">
+
+          <!-- Gallery (filled dynamically) -->
+          <div class="product-gallery" role="region" aria-label="Galeria de producto">
+            <div class="gallery__main">
+              <img id="gallery-main-img" src="" alt="" class="gallery__main-img" loading="eager" />
+              <div class="gallery__badges" id="gallery-badges"></div>
+            </div>
+            <div class="gallery__thumbs" id="gallery-thumbs" role="list" aria-label="Vistas del producto"></div>
+          </div>
+
+          <!-- Product info (filled dynamically) -->
+          <div class="product-info">
+
+            <div class="product-info__header">
+              <div>
+                <p class="product-info__collection t-label" id="product-vendor"
+                   style="color:var(--color-text-muted); margin-bottom:var(--space-2);"></p>
+                <h1 class="product-info__title" id="product-title"></h1>
+              </div>
+              <div class="product-info__prices">
+                <span class="product-info__price" id="current-price"></span>
+                <span id="compare-price"
+                      style="display:none; font-size:var(--text-base); color:var(--color-text-muted);
+                             text-decoration:line-through; font-family:var(--font-body);"></span>
+              </div>
+            </div>
+
+            <div class="donation-strip">
+              <span class="donation-strip__icon">🌊</span>
+              <span><strong id="donation-amount"></strong> van directamente a la Fundacion CRAM para proteger el mar Mediterraneo.</span>
+            </div>
+
+            <hr class="divider" />
+
+            <!-- Variant options: rendered dynamically per product options -->
+            <div id="variant-options"></div>
+
+            <!-- Qty + Add to cart -->
+            <div class="product-info__cta">
+              <div class="qty-stepper" role="group" aria-label="Cantidad">
+                <button class="qty-stepper__btn" id="qty-minus" aria-label="Reducir cantidad">-</button>
+                <span class="qty-stepper__value" id="qty-value" aria-live="polite" aria-atomic="true">1</span>
+                <button class="qty-stepper__btn" id="qty-plus" aria-label="Aumentar cantidad">+</button>
+              </div>
+              <button class="btn btn--primary btn--full btn--lg" id="add-to-cart" disabled>
+                Selecciona una talla
+              </button>
+            </div>
+
+            <!-- Buy now -->
+            <button class="btn btn--ocean btn--full" id="buy-now" disabled>
+              Comprar ahora
+            </button>
+
+            <!-- Wishlist -->
+            <button class="btn btn--secondary btn--full" id="wishlist-btn">
+              Guardar en lista de deseos
+            </button>
+
+            <hr class="divider" />
+
+            <!-- Accordion -->
+            <div class="accordion" id="accordion">
+
+              <div class="accordion__item" id="acc-desc-item" hidden>
+                <button class="accordion__trigger is-open" aria-expanded="true" aria-controls="acc-desc">
+                  <span>Descripcion</span>
+                  <span class="accordion__icon" aria-hidden="true">-</span>
+                </button>
+                <div class="accordion__content" id="acc-desc">
+                  <div id="product-description" class="accordion__prose"></div>
+                </div>
+              </div>
+
+              <div class="accordion__item">
+                <button class="accordion__trigger" aria-expanded="false" aria-controls="acc-care">
+                  <span>Cuidado de la prenda</span>
+                  <span class="accordion__icon" aria-hidden="true">+</span>
+                </button>
+                <div class="accordion__content" id="acc-care" hidden>
+                  <ul class="accordion__list">
+                    <li>Lavar a maquina 30 grados, ciclo delicado</li>
+                    <li>No usar secadora, tender en horizontal</li>
+                    <li>Planchar a temperatura media, del reves</li>
+                    <li>No usar lejia ni productos agresivos</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="accordion__item">
+                <button class="accordion__trigger" aria-expanded="false" aria-controls="acc-shipping">
+                  <span>Envio y devoluciones</span>
+                  <span class="accordion__icon" aria-hidden="true">+</span>
+                </button>
+                <div class="accordion__content" id="acc-shipping" hidden>
+                  <ul class="accordion__list">
+                    <li>Envio estandar gratuito en pedidos de mas de 80 euros</li>
+                    <li>Entrega en 2 a 4 dias habiles en Espana peninsular</li>
+                    <li>Devoluciones gratuitas en 30 dias</li>
+                    <li>Envio internacional disponible</li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related products -->
+    <section class="section section--surface" id="related-section" hidden aria-labelledby="related-title">
+      <div class="container">
+        <div class="section__header">
+          <p class="section__eyebrow">Completa tu look</p>
+          <h2 class="section__title" id="related-title">Otros productos</h2>
+        </div>
+        <div class="grid grid--products" id="related-grid"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__grid">
+        <div class="site-footer__brand">
+          <p class="site-footer__logo">KNOT</p>
+          <p class="site-footer__tagline">Polos premium con proposito.</p>
+          <div class="site-footer__cram">🌊 Partner oficial Fundacion CRAM</div>
+        </div>
+        <div>
+          <p class="site-footer__col-title">Tienda</p>
+          <ul class="site-footer__links">
+            <li><a href="catalog.html" class="site-footer__link">Todos los polos</a></li>
+            <li><a href="#" class="site-footer__link">Guia de tallas</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="site-footer__col-title">Ayuda</p>
+          <ul class="site-footer__links">
+            <li><a href="#" class="site-footer__link">Envios y devoluciones</a></li>
+            <li><a href="#" class="site-footer__link">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="site-footer__col-title">Empresa</p>
+          <ul class="site-footer__links">
+            <li><a href="index.html#causa" class="site-footer__link">Fundacion CRAM</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="site-footer__bottom">
+        <p class="site-footer__legal">2025 KNOT - Politica de privacidad - Cookies</p>
+        <div class="site-footer__social">
+          <a href="#" class="site-footer__social-link">IG</a>
+          <a href="#" class="site-footer__social-link">TK</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast container -->
+  <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <style>
+    .breadcrumb-bar { padding-block:var(--space-4); border-bottom:1px solid var(--color-border); }
+    .breadcrumb { display:flex; align-items:center; gap:var(--space-2); font-size:var(--text-sm); }
+    .breadcrumb__link { color:var(--color-text-muted); text-decoration:none; transition:color var(--duration-fast) var(--ease-out); }
+    .breadcrumb__link:hover { color:var(--color-black); }
+    .breadcrumb__sep { color:var(--color-border); }
+    .breadcrumb__current { color:var(--color-text); font-weight:var(--weight-medium); }
+
+    .product-layout { padding-block:var(--space-8) var(--space-16); }
+
+    .product-grid { display:grid; grid-template-columns:1fr; gap:var(--space-12); }
+    @media (min-width:768px) { .product-grid { grid-template-columns:1fr 1fr; gap:var(--space-16); align-items:start; } }
+    @media (min-width:1024px) { .product-grid { grid-template-columns:55% 1fr; } }
+
+    .gallery__main { position:relative; aspect-ratio:4/5; overflow:hidden; background-color:var(--color-surface); border-radius:var(--radius-md); margin-bottom:var(--space-3); }
+    .gallery__main-img { width:100%; height:100%; object-fit:cover; transition:var(--transition-image); }
+    .gallery__badges { position:absolute; top:var(--space-4); left:var(--space-4); display:flex; flex-direction:column; gap:var(--space-2); }
+    .gallery__thumbs { display:flex; gap:var(--space-3); }
+    .gallery__thumb { flex:1; aspect-ratio:1; overflow:hidden; border-radius:var(--radius-sm); border:2px solid transparent; cursor:pointer; transition:border-color var(--duration-fast) var(--ease-out); background:none; padding:0; }
+    .gallery__thumb img { width:100%; height:100%; object-fit:cover; transition:var(--transition-image); }
+    .gallery__thumb:hover img { transform:scale(1.05); }
+    .gallery__thumb.is-active { border-color:var(--color-black); }
+
+    .product-info { display:flex; flex-direction:column; gap:var(--space-6); position:sticky; top:calc(var(--header-height) + var(--space-6)); }
+    .product-info__header { display:flex; justify-content:space-between; align-items:flex-start; gap:var(--space-4); }
+    .product-info__title { font-family:var(--font-display); font-size:clamp(var(--text-2xl),3vw,var(--text-3xl)); font-weight:var(--weight-medium); letter-spacing:var(--tracking-tight); line-height:var(--leading-tight); }
+    .product-info__prices { text-align:right; flex-shrink:0; }
+    .product-info__price { font-family:var(--font-display); font-size:var(--text-2xl); font-weight:var(--weight-medium); color:var(--color-text); display:block; }
+    .product-info__cta { display:flex; gap:var(--space-3); align-items:stretch; }
+
+    .variant-group { display:flex; flex-direction:column; gap:var(--space-3); }
+    .variant-group + .variant-group { margin-top:var(--space-2); }
+
+    .accordion { display:flex; flex-direction:column; }
+    .accordion__item { border-top:1px solid var(--color-border); }
+    .accordion__item:last-child { border-bottom:1px solid var(--color-border); }
+    .accordion__trigger { display:flex; justify-content:space-between; align-items:center; width:100%; padding-block:var(--space-4); font-size:var(--text-sm); font-weight:var(--weight-medium); letter-spacing:var(--tracking-wide); color:var(--color-text); background:none; border:none; cursor:pointer; text-align:left; transition:color var(--duration-fast) var(--ease-out); }
+    .accordion__trigger:hover { color:var(--color-accent); }
+    .accordion__icon { font-size:var(--text-lg); font-weight:var(--weight-light); color:var(--color-text-muted); flex-shrink:0; }
+    .accordion__content { padding-bottom:var(--space-4); }
+    .accordion__prose { font-size:var(--text-sm); color:var(--color-text-muted); line-height:var(--leading-loose); }
+    .accordion__prose p + p { margin-top:var(--space-3); }
+    .accordion__list { display:flex; flex-direction:column; gap:var(--space-2); }
+    .accordion__list li { font-size:var(--text-sm); color:var(--color-text-muted); line-height:var(--leading-normal); padding-left:var(--space-4); position:relative; }
+    .accordion__list li::before { content:'--'; position:absolute; left:0; color:var(--color-gray-light); }
+
+    #toast-container { position:fixed; bottom:var(--space-8); left:50%; transform:translateX(-50%); z-index:var(--z-toast); pointer-events:none; display:flex; flex-direction:column; align-items:center; gap:var(--space-3); }
+    @keyframes toastIn  { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes toastOut { from { opacity:1; transform:translateY(0); } to { opacity:0; transform:translateY(8px); } }
+    .toast { animation:toastIn 250ms cubic-bezier(0.34,1.56,0.64,1) forwards; }
+    .toast.is-exiting { animation:toastOut 200ms ease-in forwards; }
+  </style>
+
+  <script src="js/shopify.js"></script>
+  <script>
+  (() => {
+    'use strict';
+
+    // ── Utilities ──────────────────────────────────────────────────────────
+
+    function showToast(msg, type) {
+      var container = document.getElementById('toast-container');
+      var el = document.createElement('div');
+      el.className = 'toast' + (type ? ' toast--' + type : '');
+      el.textContent = msg;
+      container.appendChild(el);
+      setTimeout(function() {
+        el.classList.add('is-exiting');
+        el.addEventListener('animationend', function() { el.remove(); }, { once: true });
+      }, 2800);
+    }
+
+    function setState(state) {
+      document.getElementById('product-loading').hidden = state !== 'loading';
+      document.getElementById('product-error').hidden   = state !== 'error';
+      document.getElementById('product-content').hidden = state !== 'content';
+    }
+
+    // ── Header scroll ──────────────────────────────────────────────────────
+
+    var header = document.getElementById('site-header');
+    window.addEventListener('scroll', function() {
+      header.classList.toggle('is-scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // ── Mobile nav ─────────────────────────────────────────────────────────
+
+    var mobileNav     = document.getElementById('mobile-nav');
+    var mobileBtn     = document.querySelector('.mobile-menu-btn');
+    var mobileClose   = document.getElementById('mobile-close');
+    var mobileOverlay = document.getElementById('mobile-overlay');
+
+    function openNav()  { mobileNav.classList.add('is-open');    mobileBtn.setAttribute('aria-expanded','true');  document.body.style.overflow = 'hidden'; }
+    function closeNav() { mobileNav.classList.remove('is-open'); mobileBtn.setAttribute('aria-expanded','false'); document.body.style.overflow = ''; }
+
+    mobileBtn.addEventListener('click', openNav);
+    mobileClose.addEventListener('click', closeNav);
+    mobileOverlay.addEventListener('click', closeNav);
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeNav(); });
+
+    // ── Accordion ──────────────────────────────────────────────────────────
+
+    document.getElementById('accordion').addEventListener('click', function(e) {
+      var trigger = e.target.closest('.accordion__trigger');
+      if (!trigger) return;
+      var isOpen  = trigger.getAttribute('aria-expanded') === 'true';
+      var content = document.getElementById(trigger.getAttribute('aria-controls'));
+      var icon    = trigger.querySelector('.accordion__icon');
+      trigger.setAttribute('aria-expanded', String(!isOpen));
+      trigger.classList.toggle('is-open', !isOpen);
+      content.hidden   = isOpen;
+      icon.textContent = isOpen ? '+' : '-';
+    });
+
+    // ── Quantity stepper ───────────────────────────────────────────────────
+
+    var qty = 1;
+    var qtyValueEl = document.getElementById('qty-value');
+
+    document.getElementById('qty-minus').addEventListener('click', function() {
+      if (qty > 1) { qty--; qtyValueEl.textContent = qty; }
+    });
+    document.getElementById('qty-plus').addEventListener('click', function() {
+      if (qty < 10) { qty++; qtyValueEl.textContent = qty; }
+    });
+
+    // ── Variant state ──────────────────────────────────────────────────────
+
+    var selectedOptions = {};  // { "Size": "M", "Color": "Navy" }
+    var variantMap      = {};  // { "M|Navy": variantObj }
+    var currentVariant  = null;
+    var product         = null;
+
+    function resolveVariant() {
+      var key = Object.values(selectedOptions).join('|');
+      return variantMap[key] || null;
+    }
+
+    function updateUI(variant) {
+      currentVariant = variant;
+      var addBtn    = document.getElementById('add-to-cart');
+      var buyBtn    = document.getElementById('buy-now');
+      var priceEl   = document.getElementById('current-price');
+      var compareEl = document.getElementById('compare-price');
+      var donEl     = document.getElementById('donation-amount');
+
+      if (!variant) {
+        addBtn.disabled = true;
+        buyBtn.disabled = true;
+        addBtn.textContent = 'Selecciona una opcion';
+        return;
+      }
+
+      var price    = KnotShopify.formatPrice(variant.price);
+      var donation = KnotShopify.calcDonation(variant.price.amount);
+      var onSale   = variant.compareAt &&
+                     parseFloat(variant.compareAt.amount) > parseFloat(variant.price.amount);
+
+      priceEl.textContent = price;
+      if (onSale && variant.compareAt) {
+        compareEl.textContent = KnotShopify.formatPrice(variant.compareAt);
+        compareEl.style.display = 'block';
+      } else {
+        compareEl.style.display = 'none';
+      }
+
+      donEl.textContent = donation + ' de esta compra';
+
+      if (variant.available) {
+        addBtn.disabled = false;
+        buyBtn.disabled = false;
+        addBtn.textContent = 'Anadir al carrito - ' + price;
+      } else {
+        addBtn.disabled = true;
+        buyBtn.disabled = true;
+        addBtn.textContent = 'Agotado en esta talla';
+      }
+    }
+
+    // ── Build variant map ──────────────────────────────────────────────────
+
+    function buildVariantMap(variants, optionNames) {
+      var map = {};
+      variants.forEach(function(v) {
+        var key = optionNames.map(function(name) {
+          var opt = v.selectedOptions.find(function(o) { return o.name === name; });
+          return opt ? opt.value : '';
+        }).join('|');
+        map[key] = v;
+      });
+      return map;
+    }
+
+    function slugify(str) {
+      return str.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    }
+
+    // ── Render variant options ─────────────────────────────────────────────
+
+    function renderVariantOptions(prod) {
+      var container   = document.getElementById('variant-options');
+      var optionNames = prod.options.map(function(o) { return o.name; });
+
+      variantMap = buildVariantMap(prod.variants, optionNames);
+
+      // Set initial selection to first value of each option
+      prod.options.forEach(function(opt) {
+        selectedOptions[opt.name] = opt.values[0];
+      });
+
+      var html = prod.options.map(function(option) {
+        var isSizeOpt = /talla|size|taille|grosse|maat/i.test(option.name);
+        var slug      = slugify(option.name);
+
+        var buttonsHTML = option.values.map(function(value, i) {
+          var hasStock = prod.variants.some(function(v) {
+            return v.selectedOptions.some(function(o) {
+              return o.name === option.name && o.value === value;
+            }) && v.available;
+          });
+          var isFirst = i === 0;
+          return '<button' +
+            ' class="size-option' + (isFirst ? ' is-selected' : '') + (!hasStock ? ' is-unavailable' : '') + '"' +
+            ' data-option="' + option.name + '"' +
+            ' data-value="' + value + '"' +
+            ' aria-pressed="' + (isFirst ? 'true' : 'false') + '"' +
+            (!hasStock ? ' aria-disabled="true" title="Sin stock"' : '') +
+            '>' + value + '</button>';
+        }).join('');
+
+        return '<div class="field variant-group" data-option="' + option.name + '">' +
+          '<p class="field__label">' + option.name +
+            (isSizeOpt
+              ? ' - <span id="selected-' + slug + '" style="font-weight:var(--weight-regular);text-transform:none;letter-spacing:0;">' + option.values[0] + '</span>'
+              : '') +
+          '</p>' +
+          '<div class="size-selector" role="group" aria-label="Seleccionar ' + option.name + '">' +
+            buttonsHTML +
+          '</div>' +
+          (isSizeOpt
+            ? '<p class="field__hint" id="hint-' + slug + '" style="display:none;color:#8b3a1a;">Por favor selecciona ' + option.name + '.</p>'
+            : '') +
+        '</div>';
+      }).join('');
+
+      container.innerHTML = html;
+
+      // Event delegation
+      container.addEventListener('click', function(e) {
+        var btn = e.target.closest('.size-option');
+        if (!btn || btn.classList.contains('is-unavailable')) return;
+
+        var optionName = btn.dataset.option;
+        var value      = btn.dataset.value;
+
+        container.querySelectorAll('.size-option[data-option="' + optionName + '"]').forEach(function(b) {
+          b.classList.remove('is-selected');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        btn.classList.add('is-selected');
+        btn.setAttribute('aria-pressed', 'true');
+
+        selectedOptions[optionName] = value;
+
+        var labelEl = document.getElementById('selected-' + slugify(optionName));
+        if (labelEl) labelEl.textContent = value;
+
+        updateUI(resolveVariant());
+      });
+
+      // Set initial UI to first variant
+      updateUI(resolveVariant());
+    }
+
+    // ── Render gallery ─────────────────────────────────────────────────────
+
+    function renderGallery(prod) {
+      var mainImg  = document.getElementById('gallery-main-img');
+      var thumbsEl = document.getElementById('gallery-thumbs');
+      var badgesEl = document.getElementById('gallery-badges');
+
+      var images = prod.images && prod.images.length
+        ? prod.images
+        : (prod.featuredImage ? [prod.featuredImage] : []);
+
+      if (!images.length) return;
+
+      mainImg.src = images[0].url;
+      mainImg.alt = images[0].altText || prod.title;
+
+      // Badges
+      var badgeHTML = [];
+      if (prod.isOnSale && prod.discountPct) {
+        badgeHTML.push('<span class="badge badge--sale">-' + prod.discountPct + '%</span>');
+      } else if (prod.tags.indexOf('new') > -1 || prod.tags.indexOf('nuevo') > -1) {
+        badgeHTML.push('<span class="badge badge--new">Nuevo</span>');
+      }
+      if (prod.tags.indexOf('bestseller') > -1) {
+        badgeHTML.push('<span class="badge badge--ocean badge--dot">Bestseller</span>');
+      }
+      badgesEl.innerHTML = badgeHTML.join('');
+
+      // Thumbs — only if more than 1 image
+      if (images.length > 1) {
+        thumbsEl.innerHTML = images.slice(0, 6).map(function(img, i) {
+          return '<button class="gallery__thumb ' + (i === 0 ? 'is-active' : '') + '"' +
+            ' aria-label="Ver imagen ' + (i + 1) + '"' +
+            ' data-src="' + img.url + '"' +
+            ' data-alt="' + (img.altText || prod.title) + '">' +
+            '<img src="' + img.url + '" alt="" loading="lazy" />' +
+            '</button>';
+        }).join('');
+
+        thumbsEl.addEventListener('click', function(e) {
+          var thumb = e.target.closest('.gallery__thumb');
+          if (!thumb) return;
+          thumbsEl.querySelectorAll('.gallery__thumb').forEach(function(t) { t.classList.remove('is-active'); });
+          thumb.classList.add('is-active');
+          mainImg.src = thumb.dataset.src;
+          mainImg.alt = thumb.dataset.alt;
+        });
+      }
+    }
+
+    // ── Render related products ────────────────────────────────────────────
+
+    function renderRelated(currentHandle) {
+      KnotShopify.fetchProducts({ first: 5, sortKey: 'BEST_SELLING' }).then(function(products) {
+        var related = products.filter(function(p) { return p.handle !== currentHandle; }).slice(0, 4);
+        if (!related.length) return;
+
+        var grid    = document.getElementById('related-grid');
+        var section = document.getElementById('related-section');
+
+        grid.innerHTML = related.map(function(p) {
+          var img     = p.featuredImage;
+          var imgHTML = img
+            ? '<img src="' + img.url + '" alt="' + (img.altText || p.title) + '" loading="lazy" />'
+            : '<div style="width:100%;height:100%;background:var(--color-surface);"></div>';
+          var compare = p.compareAtPrice
+            ? '<span class="product-card__price--original">' + p.compareAtPrice.formatted + '</span>' : '';
+
+          return '<article class="product-card">' +
+            '<a href="product.html?handle=' + p.handle + '" class="product-card__image-wrap" aria-label="Ver ' + p.title + '">' +
+              imgHTML +
+              '<div class="product-card__actions"><button class="btn btn--primary btn--sm">+ Carrito</button></div>' +
+            '</a>' +
+            '<div class="product-card__info">' +
+              '<h3 class="product-card__name">' + p.title + '</h3>' +
+              '<div class="product-card__price-row">' +
+                '<span class="product-card__price">' + p.price.formatted + '</span>' + compare +
+              '</div>' +
+            '</div>' +
+          '</article>';
+        }).join('');
+
+        section.hidden = false;
+      }).catch(function(err) {
+        console.warn('[KNOT] No se cargaron productos relacionados:', err);
+      });
+    }
+
+    // ── Add to cart ────────────────────────────────────────────────────────
+
+    document.getElementById('add-to-cart').addEventListener('click', function() {
+      if (!currentVariant || !currentVariant.available) return;
+      var btn = document.getElementById('add-to-cart');
+      btn.disabled = true;
+      var original = btn.textContent;
+      btn.textContent = 'Anadiendo...';
+
+      KnotShopify.getOrCreateCart().then(function(cartId) {
+        return KnotShopify.addToCart(cartId, currentVariant.id, qty);
+      }).then(function(cart) {
+        showToast(product.title + ' anadido al carrito', 'success');
+        var countEl = document.getElementById('cart-count');
+        var current = parseInt(countEl.textContent || '0', 10);
+        countEl.textContent = current + qty;
+        countEl.hidden = false;
+        btn.disabled = !currentVariant.available;
+        btn.textContent = original;
+      }).catch(function(err) {
+        console.error(err);
+        showToast('Error al anadir al carrito. Intentalo de nuevo.', '');
+        btn.disabled = false;
+        btn.textContent = original;
+      });
+    });
+
+    // ── Buy now ────────────────────────────────────────────────────────────
+
+    document.getElementById('buy-now').addEventListener('click', function() {
+      if (!currentVariant || !currentVariant.available) return;
+      var btn = document.getElementById('buy-now');
+      btn.disabled = true;
+      btn.textContent = 'Redirigiendo...';
+
+      KnotShopify.getOrCreateCart().then(function(cartId) {
+        return KnotShopify.addToCart(cartId, currentVariant.id, qty).then(function() {
+          return KnotShopify.getCheckoutUrl(cartId);
+        });
+      }).then(function(checkoutUrl) {
+        window.location.href = checkoutUrl;
+      }).catch(function(err) {
+        console.error(err);
+        showToast('Error al procesar. Intentalo de nuevo.', '');
+        btn.disabled = false;
+        btn.textContent = 'Comprar ahora';
+      });
+    });
+
+    // ── Main loader ────────────────────────────────────────────────────────
+
+    function loadProduct() {
+      setState('loading');
+
+      var params = new URLSearchParams(window.location.search);
+      var handle = params.get('handle');
+
+      if (!handle) {
+        setState('error');
+        return;
+      }
+
+      KnotShopify.fetchProduct(handle).then(function(prod) {
+        if (!prod) {
+          setState('error');
+          return;
+        }
+
+        product = prod;
+
+        // Update <head>
+        document.title = prod.title + ' - KNOT';
+        document.querySelector('meta[name="description"]').setAttribute(
+          'content',
+          prod.title + '. ' + (prod.metafields && prod.metafields.material ? prod.metafields.material : 'Algodon peinado 100%') + '. 10% de la venta va a la Fundacion CRAM.'
+        );
+
+        // Breadcrumb
+        document.getElementById('breadcrumb-title').textContent = prod.title;
+
+        // Gallery
+        renderGallery(prod);
+
+        // Title, vendor, price, donation
+        document.getElementById('product-title').textContent  = prod.title;
+        document.getElementById('product-vendor').textContent = prod.vendor || 'Coleccion SS25';
+        document.getElementById('current-price').textContent  = prod.price.formatted;
+        document.getElementById('donation-amount').textContent = prod.donation + ' de esta compra';
+
+        if (prod.compareAtPrice) {
+          var compareEl = document.getElementById('compare-price');
+          compareEl.textContent  = prod.compareAtPrice.formatted;
+          compareEl.style.display = 'block';
+        }
+
+        // Description
+        if (prod.description) {
+          document.getElementById('product-description').innerHTML = prod.description;
+          document.getElementById('acc-desc-item').hidden = false;
+        }
+
+        // Variant options
+        var hasRealOptions = prod.options.length > 0 &&
+          !(prod.options.length === 1 && prod.options[0].values.length === 1);
+
+        if (hasRealOptions) {
+          renderVariantOptions(prod);
+        } else {
+          currentVariant = prod.variants[0] || null;
+          updateUI(currentVariant);
+        }
+
+        // Show content
+        setState('content');
+
+        // Related (non-blocking)
+        renderRelated(handle);
+
+      }).catch(function(err) {
+        console.error('[KNOT] Error cargando producto:', err);
+        setState('error');
+      });
+    }
+
+    loadProduct();
+
+  })();
+  </script>
+
+</body>
+</html>
