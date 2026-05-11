@@ -15,17 +15,18 @@
   <div class="announcement-bar">
     El 10% de cada venta se dona a la <a href="#causa">Fundación CRAM</a> para la protección del mar
   </div>
-  <!-- Header -->
+
+  <!-- Header MINIMALISTA — solo logo -->
   <header class="site-header" id="site-header">
     <div class="site-header__inner">
-      <nav class="header-nav" aria-label="Navegación principal">
+      <nav class="header-nav" aria-label="Navegación principal" style="display:none;">
         <a href="catalog.html" class="header-nav__link">Tienda</a>
         <a href="#coleccion" class="header-nav__link">Colección</a>
         <a href="#causa" class="header-nav__link">Nuestra Causa</a>
       </nav>
       <a href="index.html" class="site-logo" aria-label="KNØT — Inicio">KNØT</a>
       <div class="header-actions">
-        <button class="btn btn--icon btn--ghost" aria-label="Buscar">
+        <button class="btn btn--icon btn--ghost" aria-label="Buscar" style="display:none;">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
             <circle cx="7.5" cy="7.5" r="5.5"/>
             <path d="M13 13l3 3"/>
@@ -39,7 +40,7 @@
           </svg>
           <span class="cart-badge" id="cart-count" aria-hidden="true" hidden></span>
         </a>
-        <button class="btn btn--icon btn--ghost mobile-menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-nav">
+        <button class="btn btn--icon btn--ghost mobile-menu-btn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-nav" style="display:none;">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
             <path d="M2 4h14M2 9h14M2 14h14"/>
           </svg>
@@ -47,8 +48,9 @@
       </div>
     </div>
   </header>
+
   <!-- Mobile Nav -->
-  <div class="mobile-nav" id="mobile-nav" role="dialog" aria-label="Menú de navegación" aria-modal="true">
+  <div class="mobile-nav" id="mobile-nav" role="dialog" aria-label="Menú de navegación" aria-modal="true" style="display:none;">
     <div class="mobile-nav__overlay" id="mobile-overlay"></div>
     <div class="mobile-nav__panel">
       <div class="flex justify-between items-center">
@@ -71,6 +73,7 @@
       </div>
     </div>
   </div>
+
   <main>
     <!-- HERO -->
     <section class="hero" aria-labelledby="hero-title">
@@ -84,7 +87,7 @@
         />
         <div class="hero__overlay" aria-hidden="true"></div>
       </div>
-      <!-- Logo KNØT flotando: sin filtros, azul marino puro sobre el cielo -->
+
       <div class="hero__logo-knot" aria-hidden="true">
         <img
           src="knot-logo.png"
@@ -94,8 +97,8 @@
         />
         <span class="hero__knot-fallback" style="display:none; font-family:var(--font-display); font-size:clamp(48px,10vw,120px); color:rgba(255,255,255,0.15); letter-spacing:0.2em; font-weight:300;">KNØT</span>
       </div>
+
       <div class="hero__content container">
-        <span class="hero__eyebrow t-label">Nueva Colección · SS25</span>
         <h1 class="hero__title" id="hero-title">
           El polo que<br>
           <em>cuida el mar</em>
@@ -109,18 +112,22 @@
           <a href="#causa" class="btn btn--ghost btn--lg">Conoce la causa →</a>
         </div>
       </div>
+
       <div class="hero__scroll-hint" aria-hidden="true">
         <span class="t-label" style="font-size:10px; color: rgba(248,248,246,0.5); letter-spacing: var(--tracking-widest);">SCROLL</span>
         <div class="hero__scroll-line"></div>
       </div>
     </section>
 
-    <!-- VALORES — solo envío gratuito -->
+    <!-- VALORES + DONACIÓN -->
     <section class="section section--sm" style="border-bottom: 1px solid var(--color-border);">
       <div class="container">
         <div class="shipping-strip">
           <span class="shipping-strip__icon" aria-hidden="true">✦</span>
           <span class="shipping-strip__text">Envío gratuito en pedidos superiores a 69,95&nbsp;€</span>
+        </div>
+        <div class="donation-info" style="text-align: center; padding-top: var(--space-4); font-size: var(--text-sm); color: var(--color-text-muted); letter-spacing: var(--tracking-wide); text-transform: uppercase;">
+          El 10% de cada venta va a la Fundación CRAM
         </div>
       </div>
     </section>
@@ -130,18 +137,17 @@
       <div class="container">
         <div class="section__header" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap: var(--space-4);">
           <div>
-            <p class="section__eyebrow">Colección SS25</p>
             <h2 class="section__title" id="featured-title">Destacados</h2>
           </div>
           <a href="catalog.html" class="btn btn--secondary btn--sm">Ver todo</a>
         </div>
+
         <div class="grid grid--products" id="featured-grid" aria-live="polite" aria-busy="true">
           <div class="product-card product-card--skeleton" aria-hidden="true">
             <div class="product-card__image-wrap skeleton skeleton--image"></div>
             <div class="product-card__info" style="gap:var(--space-3);">
               <div class="skeleton skeleton--text" style="width:70%;"></div>
               <div class="skeleton skeleton--text" style="width:45%;"></div>
-              <div class="skeleton skeleton--text" style="width:30%; margin-top:var(--space-1);"></div>
             </div>
           </div>
           <div class="product-card product-card--skeleton" aria-hidden="true">
@@ -149,7 +155,6 @@
             <div class="product-card__info" style="gap:var(--space-3);">
               <div class="skeleton skeleton--text" style="width:60%;"></div>
               <div class="skeleton skeleton--text" style="width:40%;"></div>
-              <div class="skeleton skeleton--text" style="width:35%; margin-top:var(--space-1);"></div>
             </div>
           </div>
           <div class="product-card product-card--skeleton" aria-hidden="true">
@@ -157,7 +162,6 @@
             <div class="product-card__info" style="gap:var(--space-3);">
               <div class="skeleton skeleton--text" style="width:75%;"></div>
               <div class="skeleton skeleton--text" style="width:50%;"></div>
-              <div class="skeleton skeleton--text" style="width:28%; margin-top:var(--space-1);"></div>
             </div>
           </div>
           <div class="product-card product-card--skeleton" aria-hidden="true">
@@ -165,10 +169,10 @@
             <div class="product-card__info" style="gap:var(--space-3);">
               <div class="skeleton skeleton--text" style="width:65%;"></div>
               <div class="skeleton skeleton--text" style="width:42%;"></div>
-              <div class="skeleton skeleton--text" style="width:32%; margin-top:var(--space-1);"></div>
             </div>
           </div>
         </div>
+
         <div id="featured-error" hidden style="padding:var(--space-8); text-align:center;">
           <p style="color:var(--color-text-muted); font-size:var(--text-sm);">
             No se pudieron cargar los productos. <a href="catalog.html" style="color:var(--color-accent); text-decoration:underline;">Ver catálogo completo →</a>
@@ -381,7 +385,6 @@
       width: 100%;
       height: auto;
       display: block;
-      /* El PNG ahora es azul marino — sin filtros, solo opacity y blend mode para luminosidad */
       opacity: 0.85;
       filter: brightness(1.3) saturate(1.1);
       mix-blend-mode: lighten;
@@ -395,13 +398,6 @@
       z-index: 1;
       padding-bottom: var(--space-20);
       color: var(--color-white);
-    }
-    .hero__eyebrow {
-      color: rgba(248, 248, 246, 0.6);
-      font-size: 10px;
-      letter-spacing: var(--tracking-widest);
-      display: block;
-      margin-bottom: var(--space-4);
     }
     .hero__title {
       font-family: var(--font-display);
@@ -451,7 +447,7 @@
       50%       { opacity: 1;   transform: scaleY(1.1); }
     }
 
-    /* Shipping strip */
+    /* Shipping strip + Donation info */
     .shipping-strip {
       display: flex;
       align-items: center;
@@ -469,6 +465,9 @@
       font-weight: var(--weight-medium);
       letter-spacing: var(--tracking-wide);
       text-transform: uppercase;
+    }
+    .donation-info {
+      font-weight: var(--weight-medium);
     }
 
     /* Editorial */
@@ -553,15 +552,6 @@
     }
     @media (max-width: 480px) { .newsletter-form__inner { flex-direction: column; } }
     .newsletter-form__input { flex: 1; }
-
-    /* Donation badge en product cards */
-    .product-card__donation {
-      font-size: var(--text-xs);
-      color: var(--color-accent);
-      font-weight: var(--weight-medium);
-      letter-spacing: var(--tracking-wide);
-      margin-top: var(--space-2);
-    }
   </style>
 
   <script src="js/shopify.js"></script>
@@ -595,18 +585,10 @@
       return '';
     }
 
-    function sizesLabel(product) {
-      const sizeOpt = product.options?.find(o => /talla|size/i.test(o.name));
-      if (sizeOpt) return sizeOpt.values.join(' · ');
-      const available = product.sizes.filter(s => s.available).map(s => s.label);
-      return available.length ? available.join(' · ') : '';
-    }
-
     function renderProductCard(product) {
       const badge       = getBadge(product);
       const imgSrc      = product.featuredImage?.url  || '';
       const imgAlt      = product.featuredImage?.altText || product.title;
-      const sizes       = sizesLabel(product);
       const compareHtml = product.compareAtPrice
         ? `<span class="product-card__price--original">${product.compareAtPrice.formatted}</span>`
         : '';
@@ -635,12 +617,10 @@
           </a>
           <div class="product-card__info">
             <h3 class="product-card__name">${product.title}</h3>
-            ${sizes ? `<p class="product-card__variant">${sizes}</p>` : ''}
             <div class="product-card__price-row">
               <span class="product-card__price">${product.price.formatted}</span>
               ${compareHtml}
             </div>
-            <p class="product-card__donation">10%</p>
           </div>
         </article>
       `;
