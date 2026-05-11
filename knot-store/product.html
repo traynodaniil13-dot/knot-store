@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -21,7 +22,6 @@
   <header class="site-header" id="site-header">
     <div class="site-header__inner">
       <nav class="header-nav">
-        <a href="catalog.html" class="header-nav__link is-active">Tienda</a>
         <a href="index.html#coleccion" class="header-nav__link">Colección</a>
         <a href="index.html#causa" class="header-nav__link">Nuestra Causa</a>
       </nav>
@@ -163,7 +163,7 @@
 
             <div class="donation-strip">
               <span class="donation-strip__icon">🌊</span>
-              <span><strong id="donation-amount"></strong> van directamente a la Fundacion CRAM para proteger el mar Mediterraneo.</span>
+              <span>El <strong>10%</strong> de esta venta va a la Fundación CRAM para proteger el mar Mediterráneo.</span>
             </div>
 
             <hr class="divider" />
@@ -746,11 +746,10 @@
         // Gallery
         renderGallery(prod);
 
-        // Title, vendor, price, donation
+        // Title, vendor, price
         document.getElementById('product-title').textContent  = prod.title;
         document.getElementById('product-vendor').textContent = prod.vendor || 'Coleccion SS25';
         document.getElementById('current-price').textContent  = prod.price.formatted;
-        document.getElementById('donation-amount').textContent = prod.donation + ' de esta compra';
 
         if (prod.compareAtPrice) {
           var compareEl = document.getElementById('compare-price');
