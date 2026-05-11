@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,27 +11,19 @@
   <link rel="stylesheet" href="styles/layout.css" />
 </head>
 <body>
-
   <!-- Announcement bar -->
   <div class="announcement-bar">
     El 10% de cada venta se dona a la <a href="#causa">Fundación CRAM</a> para la protección del mar
   </div>
-
   <!-- Header -->
   <header class="site-header" id="site-header">
     <div class="site-header__inner">
-
-      <!-- Nav izquierda (desktop) -->
       <nav class="header-nav" aria-label="Navegación principal">
         <a href="catalog.html" class="header-nav__link">Tienda</a>
         <a href="#coleccion" class="header-nav__link">Colección</a>
         <a href="#causa" class="header-nav__link">Nuestra Causa</a>
       </nav>
-
-      <!-- Logo centro -->
       <a href="index.html" class="site-logo" aria-label="KNØT — Inicio">KNØT</a>
-
-      <!-- Acciones derecha -->
       <div class="header-actions">
         <button class="btn btn--icon btn--ghost" aria-label="Buscar">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
@@ -52,10 +45,8 @@
           </svg>
         </button>
       </div>
-
     </div>
   </header>
-
   <!-- Mobile Nav -->
   <div class="mobile-nav" id="mobile-nav" role="dialog" aria-label="Menú de navegación" aria-modal="true">
     <div class="mobile-nav__overlay" id="mobile-overlay"></div>
@@ -80,15 +71,10 @@
       </div>
     </div>
   </div>
-
   <main>
-
-    <!-- ═══════════════════════════════════════════════
-         HERO
-    ════════════════════════════════════════════════ -->
+    <!-- HERO -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero__media">
-        <!-- Mar: cielo en la mitad superior, agua en la inferior -->
         <img
           src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1600&q=90&auto=format&fit=crop"
           alt="Mar Mediterráneo — horizonte abierto"
@@ -98,12 +84,16 @@
         />
         <div class="hero__overlay" aria-hidden="true"></div>
       </div>
-
-      <!-- Logo KNØT (el nudo marino) flotando en el cielo -->
+      <!-- Logo KNØT flotando: usa el PNG subido, con fallback a texto si falla -->
       <div class="hero__logo-knot" aria-hidden="true">
-        <img src="assets/knot-logo.png" alt="" class="hero__knot-img" />
+        <img
+          src="knot-logo.png"
+          alt=""
+          class="hero__knot-img"
+          onerror="this.style.display='none'; this.parentElement.querySelector('.hero__knot-fallback').style.display='block';"
+        />
+        <span class="hero__knot-fallback" style="display:none; font-family:var(--font-display); font-size:clamp(48px,10vw,120px); color:rgba(255,255,255,0.15); letter-spacing:0.2em; font-weight:300;">KNØT</span>
       </div>
-
       <div class="hero__content container">
         <span class="hero__eyebrow t-label">Nueva Colección · SS25</span>
         <h1 class="hero__title" id="hero-title">
@@ -125,35 +115,17 @@
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════════
-         VALORES
-    ════════════════════════════════════════════════ -->
+    <!-- VALORES — solo envío gratuito -->
     <section class="section section--sm" style="border-bottom: 1px solid var(--color-border);">
       <div class="container">
-        <div class="values-strip">
-          <div class="values-strip__item">
-            <span class="values-strip__icon" aria-hidden="true">⌀</span>
-            <span>100% Algodón peinado</span>
-          </div>
-          <div class="values-strip__item">
-            <span class="values-strip__icon" aria-hidden="true">♻</span>
-            <span>Producción responsable</span>
-          </div>
-          <div class="values-strip__item">
-            <span class="values-strip__icon" aria-hidden="true">🌊</span>
-            <span>10% → Fundación CRAM</span>
-          </div>
-          <div class="values-strip__item">
-            <span class="values-strip__icon" aria-hidden="true">✦</span>
-            <span>Envío gratuito +80€</span>
-          </div>
+        <div class="shipping-strip">
+          <span class="shipping-strip__icon" aria-hidden="true">✦</span>
+          <span class="shipping-strip__text">Envío gratuito en pedidos superiores a 69,95&nbsp;€</span>
         </div>
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════════
-         DESTACADOS
-    ════════════════════════════════════════════════ -->
+    <!-- DESTACADOS -->
     <section class="section" id="coleccion" aria-labelledby="featured-title">
       <div class="container">
         <div class="section__header" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap: var(--space-4);">
@@ -163,11 +135,7 @@
           </div>
           <a href="catalog.html" class="btn btn--secondary btn--sm">Ver todo</a>
         </div>
-
-        <!-- Grid dinámico: se rellena desde Shopify via JS -->
         <div class="grid grid--products" id="featured-grid" aria-live="polite" aria-busy="true">
-
-          <!-- Skeletons mientras carga -->
           <div class="product-card product-card--skeleton" aria-hidden="true">
             <div class="product-card__image-wrap skeleton skeleton--image"></div>
             <div class="product-card__info" style="gap:var(--space-3);">
@@ -200,10 +168,7 @@
               <div class="skeleton skeleton--text" style="width:32%; margin-top:var(--space-1);"></div>
             </div>
           </div>
-
         </div>
-
-        <!-- Mensaje de error (oculto por defecto) -->
         <div id="featured-error" hidden style="padding:var(--space-8); text-align:center;">
           <p style="color:var(--color-text-muted); font-size:var(--text-sm);">
             No se pudieron cargar los productos. <a href="catalog.html" style="color:var(--color-accent); text-decoration:underline;">Ver catálogo completo →</a>
@@ -212,9 +177,7 @@
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════════
-         EDITORIAL / HISTORIA
-    ════════════════════════════════════════════════ -->
+    <!-- EDITORIAL -->
     <section class="section section--surface">
       <div class="container">
         <div class="editorial">
@@ -251,9 +214,7 @@
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════════
-         CAUSA / CRAM
-    ════════════════════════════════════════════════ -->
+    <!-- CAUSA -->
     <section class="section section--dark" id="causa" aria-labelledby="causa-title">
       <div class="container">
         <div class="causa">
@@ -264,7 +225,6 @@
               <em>que nos inspira</em>
             </h2>
           </div>
-
           <div class="causa__stats">
             <div class="causa__stat">
               <span class="causa__stat-number">+3.500</span>
@@ -279,13 +239,11 @@
               <span class="causa__stat-label">de cada venta KNØT donado</span>
             </div>
           </div>
-
           <p class="causa__desc">
             La Fundación CRAM es una organización sin ánimo de lucro dedicada a la conservación
             del medio marino. Rescatan, rehabilitan y liberan tortugas marinas, cetáceos y aves
             marinas en el litoral mediterráneo. Con KNØT, tú también formas parte.
           </p>
-
           <a href="https://www.cram.org" target="_blank" rel="noopener noreferrer" class="btn btn--ocean">
             Visita fundacioncram.org →
           </a>
@@ -293,9 +251,7 @@
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════════
-         NEWSLETTER
-    ════════════════════════════════════════════════ -->
+    <!-- NEWSLETTER -->
     <section class="section" aria-labelledby="newsletter-title">
       <div class="container container--narrow" style="text-align:center;">
         <p class="section__eyebrow" style="text-align:center;">Únete a la comunidad</p>
@@ -324,15 +280,12 @@
         </form>
       </div>
     </section>
-
   </main>
 
   <!-- Footer -->
   <footer class="site-footer" aria-label="Pie de página">
     <div class="container">
       <div class="site-footer__grid">
-
-        <!-- Brand -->
         <div class="site-footer__brand">
           <p class="site-footer__logo">KNØT</p>
           <p class="site-footer__tagline">
@@ -342,8 +295,6 @@
             🌊 &nbsp; Partner oficial Fundación CRAM
           </div>
         </div>
-
-        <!-- Tienda -->
         <div>
           <p class="site-footer__col-title">Tienda</p>
           <ul class="site-footer__links">
@@ -353,8 +304,6 @@
             <li><a href="#" class="site-footer__link">Guía de tallas</a></li>
           </ul>
         </div>
-
-        <!-- Ayuda -->
         <div>
           <p class="site-footer__col-title">Ayuda</p>
           <ul class="site-footer__links">
@@ -364,8 +313,6 @@
             <li><a href="#" class="site-footer__link">Contacto</a></li>
           </ul>
         </div>
-
-        <!-- Empresa -->
         <div>
           <p class="site-footer__col-title">Empresa</p>
           <ul class="site-footer__links">
@@ -375,9 +322,7 @@
             <li><a href="#" class="site-footer__link">Prensa</a></li>
           </ul>
         </div>
-
       </div>
-
       <div class="site-footer__bottom">
         <p class="site-footer__legal">© 2025 KNØT. Todos los derechos reservados · Política de privacidad · Cookies</p>
         <div class="site-footer__social">
@@ -389,7 +334,6 @@
     </div>
   </footer>
 
-  <!-- Page-specific styles -->
   <style>
     /* Hero */
     .hero {
@@ -399,25 +343,20 @@
       align-items: flex-end;
       overflow: hidden;
     }
-
     .hero__media {
       position: absolute;
       inset: 0;
       z-index: 0;
     }
-
     .hero__image {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      /* Foto del mar: encuadrar para mostrar horizonte en el tercio superior */
       object-position: center 40%;
     }
-
     .hero__overlay {
       position: absolute;
       inset: 0;
-      /* Degradado más suave arriba (cielo visible) y más oscuro abajo (texto legible) */
       background: linear-gradient(
         to bottom,
         rgba(10, 10, 10, 0.05) 0%,
@@ -426,8 +365,6 @@
         rgba(10, 10, 10, 0.80) 100%
       );
     }
-
-    /* Logo KNØT flotando en el cielo */
     .hero__logo-knot {
       position: absolute;
       top: 12%;
@@ -436,33 +373,28 @@
       z-index: 2;
       width: clamp(120px, 18vw, 240px);
       animation: knotFloat 6s ease-in-out infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-
     .hero__knot-img {
       width: 100%;
       height: auto;
       display: block;
-      /* El PNG tiene fondo negro y trazo azul marino.
-         mix-blend-mode:screen elimina el negro (se vuelve transparente)
-         y el trazo azul oscuro sobre el cielo claro queda con buena lectura.
-         Además invertimos y ajustamos para que el nudo sea blanco luminoso. */
       filter: invert(1) brightness(1.2) contrast(0.9);
       mix-blend-mode: screen;
       opacity: 0.92;
     }
-
     @keyframes knotFloat {
       0%, 100% { transform: translateX(-50%) translateY(0px); }
       50%       { transform: translateX(-50%) translateY(-10px); }
     }
-
     .hero__content {
       position: relative;
       z-index: 1;
       padding-bottom: var(--space-20);
       color: var(--color-white);
     }
-
     .hero__eyebrow {
       color: rgba(248, 248, 246, 0.6);
       font-size: 10px;
@@ -470,7 +402,6 @@
       display: block;
       margin-bottom: var(--space-4);
     }
-
     .hero__title {
       font-family: var(--font-display);
       font-size: clamp(var(--text-3xl), 8vw, var(--text-5xl));
@@ -480,12 +411,7 @@
       color: var(--color-white);
       margin-bottom: var(--space-6);
     }
-
-    .hero__title em {
-      font-style: italic;
-      font-weight: var(--weight-regular);
-    }
-
+    .hero__title em { font-style: italic; font-weight: var(--weight-regular); }
     .hero__desc {
       font-size: var(--text-md);
       color: rgba(248, 248, 246, 0.75);
@@ -493,13 +419,7 @@
       margin-bottom: var(--space-8);
       max-width: 40ch;
     }
-
-    .hero__actions {
-      display: flex;
-      gap: var(--space-4);
-      flex-wrap: wrap;
-    }
-
+    .hero__actions { display: flex; gap: var(--space-4); flex-wrap: wrap; }
     .hero__actions .btn--ghost {
       color: rgba(248, 248, 246, 0.8);
       font-size: var(--text-base);
@@ -508,7 +428,6 @@
       text-transform: none;
       padding-inline: 0;
     }
-
     .hero__scroll-hint {
       position: absolute;
       bottom: var(--space-8);
@@ -519,46 +438,36 @@
       align-items: center;
       gap: var(--space-3);
     }
-
-    @media (min-width: 1024px) {
-      .hero__scroll-hint { display: flex; }
-    }
-
+    @media (min-width: 1024px) { .hero__scroll-hint { display: flex; } }
     .hero__scroll-line {
       width: 1px;
       height: 48px;
       background: linear-gradient(to bottom, rgba(248,248,246,0.4), transparent);
       animation: scrollPulse 2s ease-in-out infinite;
     }
-
     @keyframes scrollPulse {
       0%, 100% { opacity: 0.4; transform: scaleY(1); }
       50%       { opacity: 1;   transform: scaleY(1.1); }
     }
 
-    /* Values strip */
-    .values-strip {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-4);
-    }
-
-    @media (min-width: 768px) {
-      .values-strip { grid-template-columns: repeat(4, 1fr); }
-    }
-
-    .values-strip__item {
+    /* Shipping strip — solo envío gratuito, centrado y limpio */
+    .shipping-strip {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: var(--space-3);
+      padding-block: var(--space-4);
+    }
+    .shipping-strip__icon {
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+    }
+    .shipping-strip__text {
       font-size: var(--text-sm);
       color: var(--color-text-muted);
       font-weight: var(--weight-medium);
-    }
-
-    .values-strip__icon {
-      font-size: var(--text-xl);
-      flex-shrink: 0;
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
     }
 
     /* Editorial */
@@ -568,35 +477,23 @@
       gap: var(--space-12);
       align-items: center;
     }
-
     @media (min-width: 768px) {
       .editorial { grid-template-columns: 1fr 1fr; gap: var(--space-16); }
     }
-
     .editorial__image-wrap {
       position: relative;
       aspect-ratio: 4/5;
       overflow: hidden;
       border-radius: var(--radius-md);
     }
-
     .editorial__image-wrap img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: var(--transition-image);
     }
-
-    .editorial__image-wrap:hover img {
-      transform: scale(1.03);
-    }
-
-    .editorial__image-caption {
-      position: absolute;
-      bottom: var(--space-4);
-      left: var(--space-4);
-    }
-
+    .editorial__image-wrap:hover img { transform: scale(1.03); }
+    .editorial__image-caption { position: absolute; bottom: var(--space-4); left: var(--space-4); }
     .editorial__title {
       font-family: var(--font-display);
       font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl));
@@ -605,12 +502,7 @@
       line-height: var(--leading-tight);
       margin-bottom: var(--space-6);
     }
-
-    .editorial__title em {
-      font-style: italic;
-      font-weight: var(--weight-regular);
-    }
-
+    .editorial__title em { font-style: italic; font-weight: var(--weight-regular); }
     .editorial__body {
       font-size: var(--text-base);
       color: var(--color-text-muted);
@@ -620,17 +512,8 @@
     }
 
     /* Causa */
-    .causa {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-12);
-    }
-
-    .causa__title em {
-      font-style: italic;
-      font-weight: var(--weight-regular);
-    }
-
+    .causa { display: flex; flex-direction: column; gap: var(--space-12); }
+    .causa__title em { font-style: italic; font-weight: var(--weight-regular); }
     .causa__stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -638,13 +521,7 @@
       padding-block: var(--space-8);
       border-block: 1px solid rgba(248, 248, 246, 0.1);
     }
-
-    .causa__stat {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-2);
-    }
-
+    .causa__stat { display: flex; flex-direction: column; gap: var(--space-2); }
     .causa__stat-number {
       font-family: var(--font-display);
       font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl));
@@ -653,14 +530,12 @@
       letter-spacing: var(--tracking-tight);
       line-height: 1;
     }
-
     .causa__stat-label {
       font-size: var(--text-sm);
       color: rgba(248, 248, 246, 0.45);
       line-height: var(--leading-snug);
       max-width: 18ch;
     }
-
     .causa__desc {
       font-size: var(--text-md);
       color: rgba(248, 248, 246, 0.6);
@@ -675,62 +550,37 @@
       max-width: 480px;
       margin-inline: auto;
     }
-
-    @media (max-width: 480px) {
-      .newsletter-form__inner { flex-direction: column; }
-    }
-
+    @media (max-width: 480px) { .newsletter-form__inner { flex-direction: column; } }
     .newsletter-form__input { flex: 1; }
 
-    /* Donation note en cards de destacados */
+    /* Donation badge en product cards — solo "10%" */
     .product-card__donation {
       font-size: var(--text-xs);
       color: var(--color-accent);
       font-weight: var(--weight-medium);
       letter-spacing: var(--tracking-wide);
       margin-top: var(--space-2);
-    }
-
-    /* Donation note debajo del precio en las cards */
-    .product-card__donation {
-      font-size: var(--text-xs);
-      color: var(--color-accent);
-      letter-spacing: var(--tracking-wide);
-      margin-top: var(--space-2);
-      font-weight: var(--weight-medium);
     }
   </style>
 
-  <!-- Shopify Storefront API -->
   <script src="js/shopify.js"></script>
-
   <script>
-    // ── Header scroll ──────────────────────────────────────
     const header = document.getElementById('site-header');
     window.addEventListener('scroll', () => {
       header.classList.toggle('is-scrolled', window.scrollY > 20);
     }, { passive: true });
 
-    // ── Mobile nav ─────────────────────────────────────────
     const mobileNav     = document.getElementById('mobile-nav');
     const mobileBtn     = document.querySelector('.mobile-menu-btn');
     const mobileClose   = document.getElementById('mobile-close');
     const mobileOverlay = document.getElementById('mobile-overlay');
-
     const openNav  = () => { mobileNav.classList.add('is-open');    mobileBtn.setAttribute('aria-expanded', 'true');  document.body.style.overflow = 'hidden'; };
     const closeNav = () => { mobileNav.classList.remove('is-open'); mobileBtn.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; };
-
     mobileBtn.addEventListener('click', openNav);
     mobileClose.addEventListener('click', closeNav);
     mobileOverlay.addEventListener('click', closeNav);
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
 
-    // ── Featured products — carga dinámica desde Shopify ───
-
-    /**
-     * Determina las clases de badge a partir de los tags del producto
-     * y si está en oferta.
-     */
     function getBadge(product) {
       if (product.isOnSale && product.discountPct) {
         return `<span class="badge badge--sale">−${product.discountPct}%</span>`;
@@ -744,10 +594,6 @@
       return '';
     }
 
-    /**
-     * Genera el rango de tallas disponibles como texto corto.
-     * Ej: "S · M · L · XL · 2XL"
-     */
     function sizesLabel(product) {
       const sizeOpt = product.options?.find(o => /talla|size/i.test(o.name));
       if (sizeOpt) return sizeOpt.values.join(' · ');
@@ -755,10 +601,6 @@
       return available.length ? available.join(' · ') : '';
     }
 
-    /**
-     * Construye el HTML de una product-card a partir de
-     * los datos normalizados devueltos por fetchProducts().
-     */
     function renderProductCard(product) {
       const badge       = getBadge(product);
       const imgSrc      = product.featuredImage?.url  || '';
@@ -767,8 +609,6 @@
       const compareHtml = product.compareAtPrice
         ? `<span class="product-card__price--original">${product.compareAtPrice.formatted}</span>`
         : '';
-
-      // Variante por defecto (primera disponible)
       const defaultVariant = product.variants.find(v => v.available) || product.variants[0];
       const variantId = defaultVariant?.id || '';
 
@@ -799,18 +639,12 @@
               <span class="product-card__price">${product.price.formatted}</span>
               ${compareHtml}
             </div>
-            <p class="product-card__donation">
-              10% de esta venta — ${product.donation} a la Fundación CRAM
-            </p>
+            <p class="product-card__donation">10%</p>
           </div>
         </article>
       `;
     }
 
-    /**
-     * Muestra un toast de confirmación (reutiliza el patrón del product.html).
-     * Aquí se crea el contenedor si no existe.
-     */
     function showToast(msg, type = '') {
       let container = document.getElementById('toast-container');
       if (!container) {
@@ -834,24 +668,16 @@
       }, 2800);
     }
 
-    /**
-     * Maneja el click en "Añadir al carrito" desde el grid.
-     * Crea el carrito si no existe y añade la variante por defecto.
-     */
     async function handleQuickAdd(btn) {
       const variantId = btn.dataset.variant;
       const title     = btn.dataset.title;
       if (!variantId) return;
-
       btn.disabled = true;
       const original = btn.textContent;
       btn.textContent = '…';
-
       try {
         const cartId = await KnotShopify.getOrCreateCart();
         const cart   = await KnotShopify.addToCart(cartId, variantId, 1);
-        // updateCartUI se llama dentro de addToCart automáticamente,
-        // pero lo llamamos también aquí para garantizar el badge:
         KnotShopify.updateCartUI(cart.totalQty, cart.checkoutUrl);
         showToast(`✓ ${title} añadido al carrito`, 'success');
       } catch (err) {
@@ -863,34 +689,19 @@
       }
     }
 
-    /**
-     * Carga los productos destacados desde Shopify y los renderiza.
-     * Trae los 4 primeros por orden de colección (BEST_SELLING como fallback).
-     */
     async function loadFeaturedProducts() {
       const grid  = document.getElementById('featured-grid');
       const error = document.getElementById('featured-error');
-
       try {
-        // Traemos los 8 primeros y mostramos solo 4
-        const products = await KnotShopify.fetchProducts({
-          first:   8,
-          sortKey: 'BEST_SELLING',
-        });
-
+        const products = await KnotShopify.fetchProducts({ first: 8, sortKey: 'BEST_SELLING' });
         const featured = products.slice(0, 4);
-
         if (!featured.length) throw new Error('Sin productos');
-
         grid.setAttribute('aria-busy', 'false');
         grid.innerHTML = featured.map(renderProductCard).join('');
-
-        // Delegación de eventos para los botones "Añadir al carrito"
         grid.addEventListener('click', e => {
           const btn = e.target.closest('.js-quick-add');
           if (btn) handleQuickAdd(btn);
         });
-
       } catch (err) {
         console.error('[KNØT] Error cargando productos destacados:', err);
         grid.hidden = true;
@@ -898,12 +709,9 @@
       }
     }
 
-    // Arrancar carga al cargar el DOM
     loadFeaturedProducts();
   </script>
-
   <style>
-    /* Animaciones de toast (necesarias en index.html) */
     @keyframes toastIn {
       from { opacity: 0; transform: translateY(8px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -913,6 +721,5 @@
       to   { opacity: 0; transform: translateY(8px); }
     }
   </style>
-
 </body>
 </html>
