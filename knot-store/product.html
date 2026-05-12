@@ -407,7 +407,6 @@
       var buyBtn    = document.getElementById('buy-now');
       var priceEl   = document.getElementById('current-price');
       var compareEl = document.getElementById('compare-price');
-      var donEl     = document.getElementById('donation-amount');
 
       if (!variant) {
         addBtn.disabled = true;
@@ -417,7 +416,6 @@
       }
 
       var price    = KnotShopify.formatPrice(variant.price);
-      var donation = KnotShopify.calcDonation(variant.price.amount);
       var onSale   = variant.compareAt &&
                      parseFloat(variant.compareAt.amount) > parseFloat(variant.price.amount);
 
@@ -428,8 +426,6 @@
       } else {
         compareEl.style.display = 'none';
       }
-
-      donEl.textContent = donation + ' de esta compra';
 
       if (variant.available) {
         addBtn.disabled = false;
