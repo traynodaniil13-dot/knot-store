@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -81,15 +82,13 @@
       </div>
     </section>
 
-    <!-- VALORES + DONACIÓN -->
+    <!-- VALORES — línea elegante -->
     <section class="section section--sm" style="border-bottom: 1px solid var(--color-border);">
       <div class="container">
-        <div class="shipping-strip">
-          <span class="shipping-strip__icon" aria-hidden="true">✦</span>
-          <span class="shipping-strip__text">Envío gratuito en pedidos superiores a 69,95&nbsp;€</span>
-        </div>
-        <div class="donation-info" style="text-align: center; padding-top: var(--space-4); font-size: var(--text-sm); color: var(--color-text-muted); letter-spacing: var(--tracking-wide); text-transform: uppercase;">
-          El 10% de cada venta va a la Fundación CRAM
+        <div class="values-line">
+          <span class="values-line__item">✦ &nbsp; Envío gratuito a partir de 60&nbsp;€</span>
+          <span class="values-line__divider" aria-hidden="true"></span>
+          <span class="values-line__item">🌊 &nbsp; 10% de cada venta → Fundación CRAM</span>
         </div>
       </div>
     </section>
@@ -377,27 +376,30 @@
       50%       { opacity: 1;   transform: scaleY(1.1); }
     }
 
-    /* Shipping strip + Donation info */
-    .shipping-strip {
+    /* Values line — elegant single row */
+    .values-line {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: var(--space-3);
-      padding-block: var(--space-4);
+      gap: var(--space-6);
+      padding-block: var(--space-5);
     }
-    .shipping-strip__icon {
-      font-size: var(--text-base);
+    .values-line__item {
+      font-size: var(--text-xs);
       color: var(--color-text-muted);
-    }
-    .shipping-strip__text {
-      font-size: var(--text-sm);
-      color: var(--color-text-muted);
-      font-weight: var(--weight-medium);
-      letter-spacing: var(--tracking-wide);
+      letter-spacing: var(--tracking-widest);
       text-transform: uppercase;
-    }
-    .donation-info {
       font-weight: var(--weight-medium);
+    }
+    .values-line__divider {
+      width: 1px;
+      height: 14px;
+      background: var(--color-border);
+      flex-shrink: 0;
+    }
+    @media (max-width: 640px) {
+      .values-line { flex-direction: column; gap: var(--space-2); }
+      .values-line__divider { display: none; }
     }
 
     /* Editorial */
