@@ -47,33 +47,8 @@
     <section class="section section--sm">
       <div class="container">
 
-        <!-- Filter bar -->
-        <div class="filter-bar">
-          <div class="filter-bar__filters">
-            <button class="filter-chip is-active" data-filter="all">Todos</button>
-            <button class="filter-chip" data-filter="new">Nuevo</button>
-            <button class="filter-chip" data-filter="sale">Oferta</button>
-          </div>
-          <div class="filter-bar__sort">
-            <label for="sort-select" class="sr-only">Ordenar por</label>
-            <select id="sort-select" class="input" style="width:auto; font-size:var(--text-sm); padding-block:var(--space-2);">
-              <option value="featured">Destacados</option>
-              <option value="price-asc">Precio: menor a mayor</option>
-              <option value="price-desc">Precio: mayor a menor</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Loading state: skeletons -->
-        <div class="grid grid--products" id="catalog-loading" aria-hidden="true">
-          <div class="product-card"><div class="product-card__image-wrap skeleton" style="aspect-ratio:3/4;"></div><div style="padding-top:var(--space-4); display:flex; flex-direction:column; gap:var(--space-2);"><div class="skeleton skeleton--text" style="width:65%;"></div><div class="skeleton skeleton--text" style="width:35%;"></div></div></div>
-          <div class="product-card"><div class="product-card__image-wrap skeleton" style="aspect-ratio:3/4;"></div><div style="padding-top:var(--space-4); display:flex; flex-direction:column; gap:var(--space-2);"><div class="skeleton skeleton--text" style="width:70%;"></div><div class="skeleton skeleton--text" style="width:30%;"></div></div></div>
-          <div class="product-card"><div class="product-card__image-wrap skeleton" style="aspect-ratio:3/4;"></div><div style="padding-top:var(--space-4); display:flex; flex-direction:column; gap:var(--space-2);"><div class="skeleton skeleton--text" style="width:60%;"></div><div class="skeleton skeleton--text" style="width:32%;"></div></div></div>
-          <div class="product-card"><div class="product-card__image-wrap skeleton" style="aspect-ratio:3/4;"></div><div style="padding-top:var(--space-4); display:flex; flex-direction:column; gap:var(--space-2);"><div class="skeleton skeleton--text" style="width:72%;"></div><div class="skeleton skeleton--text" style="width:28%;"></div></div></div>
-        </div>
-
         <!-- Product grid (filled from Shopify) -->
-        <div class="grid grid--products" id="catalog-grid" aria-live="polite" hidden></div>
+        <div class="grid grid--products" id="catalog-grid" aria-live="polite"></div>
 
         <!-- Error state -->
         <div id="catalog-error" hidden style="padding:var(--space-16); text-align:center;">
@@ -328,7 +303,6 @@
 
     // ── Load catalog from Shopify ──────────────────────────────
     async function loadCatalog() {
-      const loadingEl = document.getElementById('catalog-loading');
       const gridEl    = document.getElementById('catalog-grid');
       const errorEl   = document.getElementById('catalog-error');
       const countEl   = document.getElementById('product-count');
@@ -339,10 +313,6 @@
           sortKey: 'BEST_SELLING',
         });
 
-        // Hide skeletons, show grid
-        loadingEl.hidden = true;
-        gridEl.hidden    = false;
-
         if (!products.length) {
           gridEl.hidden  = true;
           errorEl.hidden = false;
@@ -352,23 +322,8 @@
         gridEl.innerHTML = products.map(renderCard).join('');
         countEl.textContent = products.length;
 
-        // Wire up filter chips
-        document.querySelectorAll('.filter-chip').forEach(chip => {
-          chip.addEventListener('click', () => {
-            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('is-active'));
-            chip.classList.add('is-active');
-            applyFilter(chip.dataset.filter);
-          });
-        });
-
-        // Wire up sort select
-        document.getElementById('sort-select').addEventListener('change', e => {
-          applySort(e.target.value);
-        });
-
       } catch (err) {
         console.error('[KNØT] Error cargando catálogo:', err);
-        loadingEl.hidden = true;
         errorEl.hidden   = false;
       }
     }
