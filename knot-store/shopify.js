@@ -1,14 +1,7 @@
 /**
  * KNØT — Shopify Storefront API
  * ─────────────────────────────────────────────────────────────
- * Versión corregida. Bugs resueltos:
- *
- *  1. sortKey 'COLLECTION_DEFAULT' → no existe en Storefront API → cambiado a 'BEST_SELLING'
- *  2. getOrCreateCart() ahora persiste TAMBIÉN checkoutUrl en localStorage
- *  3. updateCartUI() sincroniza el badge y el href del carrito en el header
- *     en cualquier página que incluya este script
- *  4. addToCart() devuelve el cart completo con checkoutUrl actualizado
- *  5. El botón del header (#cart-btn) se enlaza dinámicamente al checkout
+ * Versión completa con carrito: añadir, eliminar, actualizar
  * ─────────────────────────────────────────────────────────────
  */
 
@@ -25,7 +18,6 @@ var SHOPIFY_CONFIG = {
 var STOREFRONT_URL = 'https://' + SHOPIFY_CONFIG.domain +
                      '/api/' + SHOPIFY_CONFIG.apiVersion + '/graphql.json';
 
-// localStorage keys
 var CART_ID_KEY  = 'knot_cart_id';
 var CART_URL_KEY = 'knot_cart_url';
 var CART_QTY_KEY = 'knot_cart_qty';
@@ -35,12 +27,6 @@ var CART_QTY_KEY = 'knot_cart_qty';
 // Cliente GraphQL base
 // ─────────────────────────────────────────────────────────────
 
-/**
- * Ejecuta cualquier query o mutation contra la Storefront API.
- * @param {string} query
- * @param {object} variables
- * @returns {Promise<object>} data
- */
 function shopifyFetch(query, variables) {
   variables = variables || {};
 
@@ -69,25 +55,16 @@ function shopifyFetch(query, variables) {
 
 
 // ─────────────────────────────────────────────────────────────
-// UI del carrito — sincronización global
+// UI del carrito
 // ─────────────────────────────────────────────────────────────
 
-/**
- * Actualiza el badge de cantidad y el href del botón del carrito
- * en la página actual. Funciona en index, catalog y product.
- *
- * @param {number} qty         - Total de artículos en el carrito
- * @param {string} checkoutUrl - URL de checkout de Shopify
- */
 function updateCartUI(qty, checkoutUrl) {
-  // Persistir en localStorage
   if (qty !== undefined)      localStorage.setItem(CART_QTY_KEY, String(qty));
   if (checkoutUrl)            localStorage.setItem(CART_URL_KEY, checkoutUrl);
 
   var storedQty = parseInt(localStorage.getItem(CART_QTY_KEY) || '0', 10);
   var storedUrl = localStorage.getItem(CART_URL_KEY) || '#';
 
-  // Badge (puede haber varios en la página si el header se repite)
   var badges = document.querySelectorAll('#cart-count, .cart-badge');
   badges.forEach(function(badge) {
     if (storedQty > 0) {
@@ -99,7 +76,6 @@ function updateCartUI(qty, checkoutUrl) {
     }
   });
 
-  // Botón del carrito → apunta al checkout real
   var cartBtns = document.querySelectorAll('#cart-btn, .cart-btn');
   cartBtns.forEach(function(btn) {
     if (storedUrl && storedUrl !== '#') {
@@ -110,10 +86,6 @@ function updateCartUI(qty, checkoutUrl) {
   });
 }
 
-/**
- * Restaura el estado del carrito desde localStorage al cargar la página.
- * Se llama automáticamente al incluir este script.
- */
 function restoreCartUI() {
   var qty = parseInt(localStorage.getItem(CART_QTY_KEY) || '0', 10);
   var url = localStorage.getItem(CART_URL_KEY) || '';
@@ -127,19 +99,10 @@ function restoreCartUI() {
 // 1. fetchProducts()
 // ─────────────────────────────────────────────────────────────
 
-/**
- * Trae productos de la tienda.
- *
- * @param {object} opts
- * @param {number}  opts.first   - Máx. 250, default 50
- * @param {string}  opts.sortKey - BEST_SELLING | TITLE | PRICE | CREATED_AT (no COLLECTION_DEFAULT)
- * @param {boolean} opts.reverse
- * @param {string}  opts.query   - Filtro GraphQL, ej: "tag:new"
- */
 function fetchProducts(opts) {
   opts = opts || {};
   var first   = opts.first   || 50;
-  var sortKey = opts.sortKey || 'BEST_SELLING'; // FIX: COLLECTION_DEFAULT no existe
+  var sortKey = opts.sortKey || 'BEST_SELLING';
   var reverse = opts.reverse || false;
   var query   = opts.query   || '';
 
@@ -264,15 +227,6 @@ function createCart() {
 // 4. addToCart(cartId, variantId, quantity)
 // ─────────────────────────────────────────────────────────────
 
-/**
- * Añade una variante al carrito. Devuelve el carrito actualizado
- * (incluyendo checkoutUrl y totalQuantity).
- *
- * @param {string} cartId
- * @param {string} variantId  - GID completo: "gid://shopify/ProductVariant/xxx"
- * @param {number} quantity
- * @returns {Promise<{id,checkoutUrl,totalQty,lines}>}
- */
 function addToCart(cartId, variantId, quantity) {
   quantity = quantity || 1;
 
@@ -315,12 +269,8 @@ function addToCart(cartId, variantId, quantity) {
     if (result.userErrors && result.userErrors.length) {
       throw new Error('[KNOT] cartLinesAdd: ' + result.userErrors.map(function(e) { return e.message; }).join(' | '));
     }
-
     var cart = normalizeCart(result.cart);
-
-    // FIX: actualizar UI del carrito inmediatamente tras añadir
     updateCartUI(cart.totalQty, cart.checkoutUrl);
-
     return cart;
   });
 }
@@ -331,7 +281,6 @@ function addToCart(cartId, variantId, quantity) {
 // ─────────────────────────────────────────────────────────────
 
 function getCheckoutUrl(cartId) {
-  // Primero intentar desde localStorage (evita un fetch innecesario)
   var cached = localStorage.getItem(CART_URL_KEY);
   if (cached) return Promise.resolve(cached);
 
@@ -350,13 +299,145 @@ function getCheckoutUrl(cartId) {
 
 
 // ─────────────────────────────────────────────────────────────
+// 6. removeFromCart(cartId, lineId)
+// ─────────────────────────────────────────────────────────────
+
+function removeFromCart(cartId, lineId) {
+  var GQL = [
+    'mutation RemoveFromCart($cartId:ID! $lineIds:[ID!]!) {',
+    '  cartLinesRemove(cartId:$cartId lineIds:$lineIds) {',
+    '    cart {',
+    '      id checkoutUrl totalQuantity',
+    '      cost {',
+    '        totalAmount { amount currencyCode }',
+    '        subtotalAmount { amount currencyCode }',
+    '      }',
+    '      lines(first:50) {',
+    '        edges {',
+    '          node {',
+    '            id quantity',
+    '            merchandise {',
+    '              ... on ProductVariant {',
+    '                id title',
+    '                price { amount currencyCode }',
+    '                product { title handle featuredImage { url altText } }',
+    '              }',
+    '            }',
+    '          }',
+    '        }',
+    '      }',
+    '    }',
+    '    userErrors { field message }',
+    '  }',
+    '}',
+  ].join('\n');
+
+  return shopifyFetch(GQL, {
+    cartId: cartId,
+    lineIds: [lineId],
+  }).then(function(data) {
+    var result = data.cartLinesRemove;
+    if (result.userErrors && result.userErrors.length) {
+      throw new Error('[KNOT] cartLinesRemove: ' + result.userErrors.map(function(e) { return e.message; }).join(' | '));
+    }
+    var cart = normalizeCart(result.cart);
+    updateCartUI(cart.totalQty, cart.checkoutUrl);
+    return cart;
+  });
+}
+
+
+// ─────────────────────────────────────────────────────────────
+// 7. updateCartLine(cartId, lineId, quantity)
+// ─────────────────────────────────────────────────────────────
+
+function updateCartLine(cartId, lineId, quantity) {
+  var GQL = [
+    'mutation UpdateCartLine($cartId:ID! $lines:[CartLineUpdateInput!]!) {',
+    '  cartLinesUpdate(cartId:$cartId lines:$lines) {',
+    '    cart {',
+    '      id checkoutUrl totalQuantity',
+    '      cost {',
+    '        totalAmount { amount currencyCode }',
+    '        subtotalAmount { amount currencyCode }',
+    '      }',
+    '      lines(first:50) {',
+    '        edges {',
+    '          node {',
+    '            id quantity',
+    '            merchandise {',
+    '              ... on ProductVariant {',
+    '                id title',
+    '                price { amount currencyCode }',
+    '                product { title handle featuredImage { url altText } }',
+    '              }',
+    '            }',
+    '          }',
+    '        }',
+    '      }',
+    '    }',
+    '    userErrors { field message }',
+    '  }',
+    '}',
+  ].join('\n');
+
+  return shopifyFetch(GQL, {
+    cartId: cartId,
+    lines: [{ id: lineId, quantity: quantity }],
+  }).then(function(data) {
+    var result = data.cartLinesUpdate;
+    if (result.userErrors && result.userErrors.length) {
+      throw new Error('[KNOT] cartLinesUpdate: ' + result.userErrors.map(function(e) { return e.message; }).join(' | '));
+    }
+    var cart = normalizeCart(result.cart);
+    updateCartUI(cart.totalQty, cart.checkoutUrl);
+    return cart;
+  });
+}
+
+
+// ─────────────────────────────────────────────────────────────
+// 8. fetchCart(cartId)
+// ─────────────────────────────────────────────────────────────
+
+function fetchCart(cartId) {
+  var GQL = [
+    'query GetCart($cartId:ID!) {',
+    '  cart(id:$cartId) {',
+    '    id checkoutUrl totalQuantity',
+    '    cost {',
+    '      totalAmount { amount currencyCode }',
+    '      subtotalAmount { amount currencyCode }',
+    '    }',
+    '    lines(first:50) {',
+    '      edges {',
+    '        node {',
+    '          id quantity',
+    '          merchandise {',
+    '            ... on ProductVariant {',
+    '              id title',
+    '              price { amount currencyCode }',
+    '              product { title handle featuredImage { url altText } }',
+    '            }',
+    '          }',
+    '        }',
+    '      }',
+    '    }',
+    '  }',
+    '}',
+  ].join('\n');
+
+  return shopifyFetch(GQL, { cartId: cartId }).then(function(data) {
+    if (!data.cart) throw new Error('[KNOT] Carrito no encontrado');
+    return normalizeCart(data.cart);
+  });
+}
+
+
+// ─────────────────────────────────────────────────────────────
 // Cart persistence helpers
 // ─────────────────────────────────────────────────────────────
 
-/**
- * Obtiene el cartId guardado o crea uno nuevo.
- * Ahora también persiste checkoutUrl y qty.
- */
 function getOrCreateCart() {
   var existing = localStorage.getItem(CART_ID_KEY);
   if (existing) return Promise.resolve(existing);
@@ -369,15 +450,12 @@ function getOrCreateCart() {
   });
 }
 
-/** Redirige al usuario al checkout de Shopify */
 function goToCheckout() {
   var cartId = localStorage.getItem(CART_ID_KEY);
   if (!cartId) {
-    // No hay carrito aún → llevar al inicio
     console.warn('[KNOT] No hay carrito activo');
     return;
   }
-
   getCheckoutUrl(cartId).then(function(url) {
     window.location.href = url;
   }).catch(function(err) {
@@ -385,7 +463,6 @@ function goToCheckout() {
   });
 }
 
-/** Vacía el carrito local */
 function clearCart() {
   localStorage.removeItem(CART_ID_KEY);
   localStorage.removeItem(CART_URL_KEY);
@@ -517,10 +594,9 @@ function normalizeCart(cart) {
 
 
 // ─────────────────────────────────────────────────────────────
-// Init — restaurar carrito al cargar la página
+// Init
 // ─────────────────────────────────────────────────────────────
 
-// Se ejecuta cuando el DOM está listo
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', restoreCartUI);
 } else {
@@ -529,30 +605,24 @@ if (document.readyState === 'loading') {
 
 
 // ─────────────────────────────────────────────────────────────
-// API pública — window.KnotShopify
+// API pública
 // ─────────────────────────────────────────────────────────────
 
 window.KnotShopify = {
-  // Productos
   fetchProducts:    fetchProducts,
   fetchProduct:     fetchProduct,
-
-  // Carrito
   createCart:       createCart,
   addToCart:        addToCart,
+  removeFromCart:   removeFromCart,
+  updateCartLine:   updateCartLine,
+  fetchCart:        fetchCart,
   getCheckoutUrl:   getCheckoutUrl,
   getOrCreateCart:  getOrCreateCart,
   goToCheckout:     goToCheckout,
   clearCart:        clearCart,
-
-  // UI
   updateCartUI:     updateCartUI,
   restoreCartUI:    restoreCartUI,
-
-  // Formateo
   formatPrice:      formatPrice,
   calcDonation:     calcDonation,
-
-  // Config (lectura)
   config: SHOPIFY_CONFIG,
 };
